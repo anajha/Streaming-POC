@@ -1,0 +1,89 @@
+
+    <mat-card>
+      <mat-card-title> Select from a list of operations to perform</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="optionsForm">
+          <div>
+            <mat-checkbox formControlName="cdc" (change)="changeOptionCDC($event)"> CDC Operation</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox formControlName="dqo"  (change)="changeOptionDQO($event)"> Data Quality Operation</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox formControlName="idm" (change)="changeOptionIDM($event)"> Interlink Domain Models</mat-checkbox>
+          </div>
+        </form> 
+       </mat-card-content>
+     </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <file-drop class="filedrop" headertext="Drag and drop files for processing, here...." (onFileDrop)="dropped($event)" 
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+          </file-drop>
+        </div>
+      </mat-card-content>
+    </mat-card>
+<mat-grid-list cols="1" rowHeight="1:1">
+    <mat-grid-tile class="title-tem">
+        <mat-card>
+            <mat-card-content>
+                <div>
+                    <div class="mat-elevation-z8">
+                      <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>File Name</mat-header-cell>
+                          <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+                        </ng-container>
+                    
+                        <!-- Last Modified Column -->
+                        <ng-container matColumnDef="uploadTime">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Upload Time</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.uploadTime}}</mat-cell>
+                        </ng-container>
+                      
+                        <!-- Size Column -->
+                        <ng-container matColumnDef="jobId">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Job ID</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.jobId}}</mat-cell>
+                        </ng-container>
+
+                        <!-- Size Column -->
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.status}}</mat-cell>
+                        </ng-container>
+
+                        <!-- Last Modified Column -->
+                        <ng-container matColumnDef="lastModified">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Last Modified</mat-header-cell>
+                          <mat-cell *matCellDef="let row">{{row.lastModified}}</mat-cell>
+                        </ng-container>
+                    
+                        <!-- Size Column -->
+                        <ng-container matColumnDef="size">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+                          <mat-cell *matCellDef="let row">{{row.size|fileSizeFormatter}}</mat-cell>
+                        </ng-container>
+                    
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                      </mat-table>
+                    
+                      <mat-paginator #paginator
+                        [length]="dataSource.data.length"
+                        [pageIndex]="0"
+                        [pageSize]="5"
+                        [pageSizeOptions]="[5, 8, 10, 50, 100]">
+                      </mat-paginator>
+                    </div>
+                  </div>
+                </mat-card-content>
+          </mat-card>
+  
+
+  
+  
+
