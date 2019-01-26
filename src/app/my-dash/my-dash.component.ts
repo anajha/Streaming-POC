@@ -56,6 +56,7 @@ export class MyDashComponent {
         if(data.length===0)
         {
           console.log("The provided job Id does not exist");
+          this.pollingData.unsubscribe();
         }
 
         else{
