@@ -77,6 +77,7 @@ export class JobSubmitComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ngxService.stop();
     this.dataSource = new MyTableDataSource(this.paginator, this.sort);
   }
 

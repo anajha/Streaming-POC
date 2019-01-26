@@ -20,13 +20,14 @@ export class MyTableListComponent implements OnInit {
   pollingData:any;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['jobId', 'jobName', 'jobStatus'];
+  displayedColumns = ['Job_Id', 'Job_Status', 'State_Name','State_Status','State_Level_Number','State_start_time','State_end_time'];
 
   constructor(private ngxService: NgxUiLoaderService,private backendService: BackendOperationsService) { 
   }
 
   ngOnInit() {
     
+    this.ngxService.stop();
     this.dataSource = new MyTableDataSource(this.paginator, this.sort);
     this.ngxService.start();
 

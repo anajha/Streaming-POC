@@ -7,30 +7,32 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 export class BackendOperationsService {
   constructor(private http:HttpClient) {}
 
-  private baseUrl = 'http://localhost:8080';
-
-  private baseUrl2= 'http://localhost:8081';
+  private baseUrl = '';
  
   public submitJob(fileDetails)
   { 
-    return this.http.post("https://os4nuwsrje.execute-api.us-east-1.amazonaws.com/dev/documentpload",fileDetails)
+    return this.http.post(this.baseUrl+'/documentpload',fileDetails);
   }
 
   public getActiveJobDetails()
   { 
-    return this.http.get(this.baseUrl2+"/getJobDetails")
+    return this.http.get(this.baseUrl+'/get-running-jobs');
   }
 
   public getAllJobDetails()
   { 
-    return this.http.get(this.baseUrl2+"/getJobDetails")
+    return this.http.get(this.baseUrl+'/get-all-items',{
+      params: {
+        table:"job_status"
+      }
+    })
   }
 
   public getDAGDetails(jobID)
   { 
-    return this.http.get(this.baseUrl2+"/getDAGDetails",{
+    return this.http.get(this.baseUrl+'/get-job',{
       params: {
-      jobID: jobID
+      job_id: jobID
     }})
   }
 }

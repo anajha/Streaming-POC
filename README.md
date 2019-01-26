@@ -1,2 +1,0 @@
-# Streaming-POC
-streaming poc

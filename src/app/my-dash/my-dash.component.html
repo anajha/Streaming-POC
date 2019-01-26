@@ -3,7 +3,7 @@
         <mat-card-header>
           <mat-card-title>
             <form [formGroup]="viewDAGForm" class="example-form">
-              <mat-form-field class="example-full-width">
+              <mat-form-field style="width: 140%;" class="example-full-width">
                 <input matInput placeholder="Enter Job ID" formControlName="jobID">
               </mat-form-field>
               <button mat-raised-button color="primary" (click)="showGraph()">Show DAG</button>

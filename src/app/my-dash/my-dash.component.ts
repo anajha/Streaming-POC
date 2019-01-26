@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Node } from './my-dash-node';
 import { Link } from './my-dash-link';
 import { JobList } from './my-dash-data';
-import { interval } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { switchMap} from 'rxjs/operators';
 import { BackendOperationsService } from '../backend-operations.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -33,14 +33,15 @@ export class MyDashComponent {
   }
 
   public ngOnInit(){
-    
+    this.pollingData=new Observable<any>();
+    this.ngxService.stop();
   }
 
   public showGraph()
   {
     
     this.ngxService.start();
-    this.pollingData=interval(5000).pipe(
+    this.pollingData=interval(1000).pipe(
       switchMap(() => this.backendService.getDAGDetails(this.viewDAGForm.value.jobID)))
       .subscribe((data:Array<JobList>)=>{
         
@@ -67,19 +68,19 @@ export class MyDashComponent {
 
           data.forEach(job=>{
             this.node=new Node();
-            this.node.id=job.jobStateNo;
-            this.node.label=job.jobStatus;
-            this.node.position=job.jobId;
+            this.node.id=job.State_Level_Number;
+            this.node.label=job.State_Name;
+            this.node.position="Start Time:-"+job.State_start_time+" End Time:-"+job.State_end_time;
             this.nodeList.push(this.node);
 
             this.link=new Link();
             this.link.source=this.previousLink;
-            this.link.target=job.jobStateNo;
+            this.link.target=job.State_Level_Number;
             this.link.label='';
             this.linkList.push(this.link);
-            this.previousLink=job.jobStateNo;
+            this.previousLink=job.State_Level_Number;
 
-            if(job.jobStatus=="Completed"){
+            if(job.Job_Status=="Completed"){
               this.pollingData.unsubscribe();
               console.log("Polling has been stopped");
             }
@@ -93,4 +94,5 @@ export class MyDashComponent {
         this.ngxService.stop();
     }) 
 }
+
 }

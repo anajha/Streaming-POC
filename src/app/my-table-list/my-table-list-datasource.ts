@@ -65,9 +65,13 @@ export class MyTableDataSource extends DataSource<JobList> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.jobId, b.jobId, isAsc);
-        case 'id': return compare(a.jobName, b.jobName, isAsc);
-        case 'status': return compare(a.jobStatus, b.jobStatus, isAsc);
+        case 'Job_Id': return compare(a.Job_Id, b.Job_Id, isAsc);
+        case 'Job_Status': return compare(a.Job_Status, b.Job_Status, isAsc);
+        case 'State_Name': return compare(a.State_Name, b.State_Name, isAsc);
+        case 'State_Status': return compare(a.State_Status, b.State_Status, isAsc);
+        case 'State_Level_Number': return compare(a.State_Level_Number, b.State_Level_Number, isAsc);
+        case 'State_start_time': return compare(+Number(new Date(a.State_start_time)), +Number(new Date(b.State_start_time)), isAsc);
+        case 'State_end_time': return compare(+Number(new Date(a.State_end_time)), +Number(new Date(b.State_end_time)), isAsc);
         default: return 0;
       }
     });

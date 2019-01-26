@@ -16,28 +16,29 @@ export class MyTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-
   dataSource: MyTableDataSource;
 
   pollingData:any;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['jobId', 'jobName', 'jobStatus'];
+  displayedColumns = ['Job_Id', 'Job_Status', 'State_Name','State_Status','State_Level_Number','State_start_time','State_end_time'];
 
   constructor(private ngxService: NgxUiLoaderService,private backendService: BackendOperationsService) { 
   }
 
   ngOnInit() {
     
+    this.ngxService.stop();
     this.dataSource = new MyTableDataSource(this.paginator, this.sort);
     this.ngxService.start();
 
-    this.pollingData=interval(5000).pipe(
-      switchMap(() => this.backendService.getAllJobDetails()))
+    this.pollingData=interval(1000).pipe(
+      switchMap(() => this.backendService.getActiveJobDetails()))
       .subscribe((data:Array<JobList>)=>{
         console.log(data);
         this.dataSource = new MyTableDataSource(this.paginator, this.sort);
-        this.dataSource.setData(data)
+        this.dataSource.setData(data);
+        console.log(data);
         this.ngxService.stop();
     })          
   }
